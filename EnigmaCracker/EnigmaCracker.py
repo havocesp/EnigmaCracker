@@ -60,11 +60,11 @@ if os.environ.get("RUNNING_IN_NEW_CMD") != "TRUE":
 
     # For Windows
     if os_type == "Windows":
-        subprocess.run(f'start cmd.exe /K python "{__file__}"', shell=True)
+        subprocess.run(f'start cmd.exe /K python "{__file__}"', shell=False)
 
     # For Linux
     elif os_type == "Linux":
-        subprocess.run(f"gnome-terminal -- python3 {__file__}", shell=True)
+        subprocess.run(f"gnome-terminal -- python3 {__file__}", shell=False)
 
     # Exit this run, as we've opened a new CMD
     sys.exit()

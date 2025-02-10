@@ -128,7 +128,7 @@ def check_ETH_balance(address, etherscan_api_key, retries=3, delay=5):
     for attempt in range(retries):
         try:
             # Make a request to the Etherscan API
-            response = requests.get(api_url)
+            response = requests.get(api_url, timeout=60)
             data = response.json()
 
             # Check if the request was successful
@@ -154,7 +154,7 @@ def check_BTC_balance(address, retries=3, delay=5):
     # Check the balance of the address
     for attempt in range(retries):
         try:
-            response = requests.get(f"https://blockchain.info/balance?active={address}")
+            response = requests.get(f"https://blockchain.info/balance?active={address}", timeout=60)
             data = response.json()
             balance = data[address]["final_balance"]
             return balance / 100000000  # Convert satoshi to bitcoin

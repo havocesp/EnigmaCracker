@@ -3,7 +3,6 @@ import subprocess
 import sys
 import os
 import platform
-import requests
 import logging
 import time
 from dotenv import load_dotenv
@@ -15,6 +14,7 @@ from bip_utils import (
     Bip44Changes,
     Bip39WordsNum,
 )
+from security import safe_requests
 
 # Constants
 LOG_FILE_NAME = "enigmacracker.log"
@@ -128,7 +128,7 @@ def check_ETH_balance(address, etherscan_api_key, retries=3, delay=5):
     for attempt in range(retries):
         try:
             # Make a request to the Etherscan API
-            response = requests.get(api_url)
+            response = safe_requests.get(api_url)
             data = response.json()
 
             # Check if the request was successful
@@ -154,7 +154,7 @@ def check_BTC_balance(address, retries=3, delay=5):
     # Check the balance of the address
     for attempt in range(retries):
         try:
-            response = requests.get(f"https://blockchain.info/balance?active={address}")
+            response = safe_requests.get(f"https://blockchain.info/balance?active={address}")
             data = response.json()
             balance = data[address]["final_balance"]
             return balance / 100000000  # Convert satoshi to bitcoin
